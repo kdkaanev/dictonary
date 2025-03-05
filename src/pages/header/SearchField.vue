@@ -1,5 +1,5 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 import { useInputStore } from '../../stores/inputStore';
 import { useThemeStore } from '../../stores/themeStore';
 import { useWordStore } from '../../stores/wordStore';
@@ -8,6 +8,7 @@ const themeStore = useThemeStore();
 const inputStore = useInputStore();
 const wordStore = useWordStore();
 const showError = ref(false);
+const inputWord = ref('');
 async function searchWord() {
   await wordStore.getWord(inputStore.value);
   if (inputStore.value === '') {
@@ -24,11 +25,17 @@ function showBorder() {
     showError.value = false;
   }
 }
+
+const handleInput = () => {
+  if (inputStore.value === '') {
+    wordStore.errorMessage = '' 
+  }
+};
 </script>
 
 <template>
   <div class="search" @clickPrevent="showError.value = false">
-    <input v-if="themeStore.isDark" v-model="inputStore.value" type="text" class="search-input dark" :class="{ 'border-red': showError }" placeholder="Search for any word...">
+    <input v-if="themeStore.isDark" v-model="inputStore.value" type="text" class="search-input dark" :class="{ 'border-red': showError }" placeholder="Search for any word..." @input="handleInput">
     <input v-else v-model="inputStore.value" type="text" class="search-input light" :class="{ 'border-red': showError }" placeholder="Search for any word...">
     <img src="../../assets/icon-search.svg" alt="lens" class="search-icon" @click="() => { searchWord(); showBorder(); }">
   </div>

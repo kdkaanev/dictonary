@@ -1,7 +1,9 @@
 <script setup>
 import { useWordStore } from '../../../stores/wordStore';
+import { watch, ref } from 'vue';
 
 const wordStore = useWordStore();
+
 </script>
 
 <template>

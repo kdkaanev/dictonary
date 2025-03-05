@@ -5,9 +5,22 @@ import WordComponent from '../pages/main/components/WordComponent.vue';
 
 import { useInputStore } from '../stores/inputStore';
 import { useWordStore } from '../stores/wordStore';
+import { watch , ref} from 'vue';
 
 const wordStore = useWordStore();
 const inputStore = useInputStore();
+
+const inputWord = ref('');
+
+
+
+watch(inputWord, (newWord) => {
+  if (newWord) {
+    wordStore.getWord(newWord);
+  } else {
+    wordStore.clearWord();
+  }
+});
 </script>
 
 <template>

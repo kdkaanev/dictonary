@@ -24,6 +24,7 @@ export const useWordStore = defineStore('word', {
         }
         else {
           this.errorMessage = error.message;
+          this.word = { '': [] };
           console.error('Get word failed', error);
         }
       }

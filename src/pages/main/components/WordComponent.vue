@@ -1,8 +1,10 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, watch } from 'vue';
 
 import { useWordStore } from '../../../stores/wordStore';
+import { useInputStore } from '../../../stores/inputStore';
 
+const inputStore = useInputStore();
 const wordStore = useWordStore();
 const audioPlayer = ref(null);
 const audioSrc = ref('');
@@ -25,6 +27,10 @@ async function playAudio() {
     console.error(error);
   }
 }
+
+
+
+
 </script>
 
 <template>
@@ -38,7 +44,7 @@ async function playAudio() {
       </p>
     </section>
     <button @click="playAudio">
-      <img src="../../assets/icon-play.svg" alt="">
+      <img src="../../../assets/icon-play.svg" alt="">
       <audio ref="audioPlayer" controls hidden>
         <source :src="audioSrc" type="audio/mpeg">
       </audio>
